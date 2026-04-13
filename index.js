@@ -98,7 +98,7 @@ var virtualColumn = [
 var grid = new ej.grids.Grid({
   dataSource: window.orderData,
   height: '60vh',
-  width: '70vw',
+  width: '80vw',
   allowFiltering: true,
   toolbar: ['Search', 'Add', 'Edit', 'Delete', 'Update', 'Cancel'],
   editSettings: { allowAdding: true, allowEditing: true, allowDeleting: true},
@@ -107,43 +107,42 @@ var grid = new ej.grids.Grid({
 
 grid.appendTo('#Grid');
 
-var data = [
-    { id: 'Normal', type: 'Normal' },
-    { id: 'allowPaging', type: 'allowPaging' },
-    { id: 'enableVirtualization', type: 'enableVirtualization' },
-    { id: 'enableInfiniteScrolling', type: 'enableInfiniteScrolling' },
-];
+var radiobutton = new ej.buttons.RadioButton({ label: 'Default', name: 'default', checked: true, change: onChange });
+radiobutton.appendTo('#default');
 
-var dropDownListObject = new ej.dropdowns.DropDownList({
-    dataSource: data,
-    fields: { text: 'type', value: 'id' },
-    value: 'Normal',
-    change: function (e) {
-        if (dropDownListObject.value === 'Normal') {
-            grid.enableVirtualization = false;
-            grid.enableInfiniteScrolling = false;
-            grid.allowPaging = false;
-            grid.changeDataSource(window.orderData, column);
-        }else if (dropDownListObject.value === 'allowPaging') {
-            grid.enableVirtualization = false;
-            grid.enableInfiniteScrolling = false;
-            grid.allowPaging = true;
-            grid.changeDataSource(window.orderData, column);
-        }else if (dropDownListObject.value === 'enableVirtualization') {
-            grid.enableVirtualization = true;
-            grid.enableInfiniteScrolling = false;
-            grid.enableColumnVirtualization = true;
-            grid.allowPaging = false;
-            ggrid.changeDataSource(virtualData, virtualColumn);
-        }else if (dropDownListObject.value === 'enableInfiniteScrolling') {
-            grid.enableVirtualization = false;
-            grid.enableInfiniteScrolling = true;
-            grid.allowPaging = false;
-            grid.changeDataSource(virtualData, virtualColumn);
-        }
-    },
-});
-dropDownListObject.appendTo('#animation');
+radiobutton = new ej.buttons.RadioButton({ label: 'Paging', name: 'default', change: onChange });
+radiobutton.appendTo('#paging');
+
+radiobutton = new ej.buttons.RadioButton({ label: 'Virtual Scrolling', name: 'default', change: onChange });
+radiobutton.appendTo('#virtual');
+
+radiobutton = new ej.buttons.RadioButton({ label: 'Infinite Scrolling', name: 'default', change: onChange });
+radiobutton.appendTo('#infinite');
+
+function onChange(args) { 
+   if (args.event.target.id === 'default') {
+        grid.enableVirtualization = false;
+        grid.enableInfiniteScrolling = false;
+        grid.allowPaging = false;
+        grid.changeDataSource(window.orderData, column);
+    } else if (args.event.target.id === 'paging') {
+        grid.enableVirtualization = false;
+        grid.enableInfiniteScrolling = false;
+        grid.allowPaging = true;
+        grid.changeDataSource(window.orderData, column);
+    } else if (args.event.target.id === 'virtual') {
+        grid.enableVirtualization = true;
+        grid.enableInfiniteScrolling = false;
+        grid.enableColumnVirtualization = true;
+        grid.allowPaging = false;
+        grid.changeDataSource(virtualData, virtualColumn);
+    } else if (args.event.target.id === 'infinite') {
+        grid.enableVirtualization = false;
+        grid.enableInfiniteScrolling = true;
+        grid.allowPaging = false;
+        grid.changeDataSource(virtualData, virtualColumn);
+    }
+}
 
 var heightData = [
     { id: '50vh', type: '50vh' },
@@ -161,30 +160,46 @@ var heightValue = new ej.dropdowns.DropDownList({
     change: function (e) {
         if (heightValue.value) {
             grid.height = heightValue.value;
-            grid.freezeRefresh();
         }
     },
 });
 heightValue.appendTo('#height');
 
 var widthData = [
+    { id: '40vw', type: '40vw' },
     { id: '50vw', type: '50vw' },
     { id: '60vw', type: '60vw' },
     { id: '70vw', type: '70vw' },
     { id: '80vw', type: '80vw' },
-    { id: '90vw', type: '90vw' },
-    { id: '100vw', type: '100vw' },
 ];
 
 var widthValue = new ej.dropdowns.DropDownList({
     dataSource: widthData,
     fields: { text: 'type', value: 'id' },
-    value: '70vw',
+    value: '80vw',
     change: function (e) {
         if (widthValue.value) {
             grid.width = widthValue.value;
-            grid.freezeRefresh();
         }
     },
 });
 widthValue.appendTo('#width');
+
+
+const filter = new ej.buttons.CheckBox({
+    checked: true,
+    change: function (args) {
+        grid.allowFiltering = args.checked;
+        grid.freezeRefresh();
+    }
+});
+filter.appendTo('#filter');
+
+
+const group = new ej.buttons.CheckBox({
+    change: function (args) {
+        grid.allowGrouping = args.checked;
+        grid.freezeRefresh();
+    }
+});
+group.appendTo('#group');
