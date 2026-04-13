@@ -97,7 +97,7 @@ var virtualColumn = [
 
 var grid = new ej.grids.Grid({
   dataSource: window.orderData,
-  height: '65vh',
+  height: '60vh',
   width: '70vw',
   allowFiltering: true,
   toolbar: ['Search', 'Add', 'Edit', 'Delete', 'Update', 'Cancel'],
@@ -144,3 +144,47 @@ var dropDownListObject = new ej.dropdowns.DropDownList({
     },
 });
 dropDownListObject.appendTo('#animation');
+
+var heightData = [
+    { id: '50vh', type: '50vh' },
+    { id: '60vh', type: '60vh' },
+    { id: '70vh', type: '70vh' },
+    { id: '80vh', type: '80vh' },
+    { id: '90vh', type: '90vh' },
+    { id: '100vh', type: '100vh' },
+];
+
+var heightValue = new ej.dropdowns.DropDownList({
+    dataSource: heightData,
+    fields: { text: 'type', value: 'id' },
+    value: '60vh',
+    change: function (e) {
+        if (heightValue.value) {
+            grid.height = heightValue.value;
+            grid.freezeRefresh();
+        }
+    },
+});
+heightValue.appendTo('#height');
+
+var widthData = [
+    { id: '50vw', type: '50vw' },
+    { id: '60vw', type: '60vw' },
+    { id: '70vw', type: '70vw' },
+    { id: '80vw', type: '80vw' },
+    { id: '90vw', type: '90vw' },
+    { id: '100vw', type: '100vw' },
+];
+
+var widthValue = new ej.dropdowns.DropDownList({
+    dataSource: widthData,
+    fields: { text: 'type', value: 'id' },
+    value: '70vw',
+    change: function (e) {
+        if (widthValue.value) {
+            grid.width = widthValue.value;
+            grid.freezeRefresh();
+        }
+    },
+});
+widthValue.appendTo('#width');
