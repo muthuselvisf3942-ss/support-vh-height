@@ -97,7 +97,7 @@ var virtualColumn = [
 
 var grid = new ej.grids.Grid({
   dataSource: window.orderData,
-  height: '50vh',
+  height: '65vh',
   width: '70vw',
   allowFiltering: true,
   toolbar: ['Search', 'Add', 'Edit', 'Delete', 'Update', 'Cancel'],
@@ -123,31 +123,23 @@ var dropDownListObject = new ej.dropdowns.DropDownList({
             grid.enableVirtualization = false;
             grid.enableInfiniteScrolling = false;
             grid.allowPaging = false;
-            grid.columns = column;
-            grid.dataSource = window.orderData;
-            grid.refresh();
+            grid.changeDataSource(window.orderData, column);
         }else if (dropDownListObject.value === 'allowPaging') {
             grid.enableVirtualization = false;
             grid.enableInfiniteScrolling = false;
             grid.allowPaging = true;
-            grid.columns = column;
-            grid.dataSource = window.orderData;
-            grid.refresh();
+            grid.changeDataSource(window.orderData, column);
         }else if (dropDownListObject.value === 'enableVirtualization') {
             grid.enableVirtualization = true;
             grid.enableInfiniteScrolling = false;
             grid.enableColumnVirtualization = true;
             grid.allowPaging = false;
-            grid.columns = virtualColumn;
-            grid.dataSource = virtualData;
-            grid.refresh();
+            ggrid.changeDataSource(virtualData, virtualColumn);
         }else if (dropDownListObject.value === 'enableInfiniteScrolling') {
             grid.enableVirtualization = false;
             grid.enableInfiniteScrolling = true;
             grid.allowPaging = false;
-            grid.columns = virtualColumn;
-            grid.dataSource = virtualData;
-            grid.refresh();
+            grid.changeDataSource(virtualData, virtualColumn);
         }
     },
 });
